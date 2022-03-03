@@ -23,10 +23,10 @@ import (
 	tags "github.com/opentracing/opentracing-go/ext"
 	"go.uber.org/zap"
 
-	"github.com/jaegertracing/jaeger/examples/hotrod/pkg/delay"
-	"github.com/jaegertracing/jaeger/examples/hotrod/pkg/log"
-	"github.com/jaegertracing/jaeger/examples/hotrod/pkg/tracing"
-	"github.com/jaegertracing/jaeger/examples/hotrod/services/config"
+	"github.com/nikhilankam9/real_time_systems/hotrod/pkg/delay"
+	"github.com/nikhilankam9/real_time_systems/hotrod/pkg/log"
+	"github.com/nikhilankam9/real_time_systems/hotrod/pkg/tracing"
+	"github.com/nikhilankam9/real_time_systems/hotrod/services/config"
 )
 
 // database simulates Customer repository implemented on top of an SQL database

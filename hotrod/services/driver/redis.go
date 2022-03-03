@@ -27,10 +27,10 @@ import (
 	"github.com/uber/jaeger-lib/metrics"
 	"go.uber.org/zap"
 
-	"github.com/jaegertracing/jaeger/examples/hotrod/pkg/delay"
-	"github.com/jaegertracing/jaeger/examples/hotrod/pkg/log"
-	"github.com/jaegertracing/jaeger/examples/hotrod/pkg/tracing"
-	"github.com/jaegertracing/jaeger/examples/hotrod/services/config"
+	"github.com/nikhilankam9/real_time_systems/hotrod/pkg/delay"
+	"github.com/nikhilankam9/real_time_systems/hotrod/pkg/log"
+	"github.com/nikhilankam9/real_time_systems/hotrod/pkg/tracing"
+	"github.com/nikhilankam9/real_time_systems/hotrod/services/config"
 )
 
 // Redis is a simulator of remote Redis cache
