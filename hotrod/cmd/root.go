@@ -102,7 +102,7 @@ func onInitialize() {
 	}
 	if config.MySQLGetDelay != fixDBConnDelay {
 		logger.Info("fix: overriding MySQL query delay", zap.Duration("old", config.MySQLGetDelay), zap.Duration("new", fixDBConnDelay))
-		config.MySQLGetDelay = fixDBConnDelay
+		// config.MySQLGetDelay = fixDBConnDelay
 	}
 	if fixDBConnDisableMutex {
 		logger.Info("fix: disabling db connection mutex")
@@ -110,7 +110,7 @@ func onInitialize() {
 	}
 	if config.RouteWorkerPoolSize != fixRouteWorkerPoolSize {
 		logger.Info("fix: overriding route worker pool size", zap.Int("old", config.RouteWorkerPoolSize), zap.Int("new", fixRouteWorkerPoolSize))
-		config.RouteWorkerPoolSize = fixRouteWorkerPoolSize
+		// config.RouteWorkerPoolSize = fixRouteWorkerPoolSize
 	}
 
 	if customerPort != 8081 {

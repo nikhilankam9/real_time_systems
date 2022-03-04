@@ -82,7 +82,7 @@ func (d *database) Get(ctx context.Context, customerID string) (*Customer, error
 		defer span.Finish()
 		ctx = opentracing.ContextWithSpan(ctx, span)
 	}
-	// TODO: Think of multiple connections to mysql
+	
 	if !config.MySQLMutexDisabled {
 		// simulate misconfigured connection pool that only gives one connection at a time
 		d.lock.Lock(ctx)

@@ -17,7 +17,6 @@ package driver
 
 import (
 	"context"
-	"fmt"
 	"net"
 
 	otgrpc "github.com/opentracing-contrib/go-grpc"
@@ -61,7 +60,6 @@ func (s *Server) Run() error {
 	if err != nil {
 		s.logger.Bg().Fatal("Unable to create http listener", zap.Error(err))
 	}
-	fmt.Println("New driver service-------------------------------")
 	RegisterDriverServiceServer(s.server, s)
 	err = s.server.Serve(lis)
 	if err != nil {
