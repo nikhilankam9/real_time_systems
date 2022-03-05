@@ -22,6 +22,7 @@ import (
 	"math"
 	"math/rand"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/opentracing/opentracing-go"
@@ -107,10 +108,19 @@ func computeRoute(ctx context.Context, pickup, dropoff string) *Route {
 	// Simulate expensive calculation
 	delay.Sleep(config.RouteCalcDelay, config.RouteCalcDelayStdDev)
 
-	eta := math.Max(2, rand.NormFloat64()*3+5)
+	pickupFloat, _ := strconv.ParseFloat(pickup, 64)
+	dropoffFloat, _ := strconv.ParseFloat(dropoff, 64)
+	
+	// additional delay to simulate route calculation based on distance
+	time.Sleep(time.Duration(math.Abs(dropoffFloat - pickupFloat) / 10) * time.Millisecond)
+
+	// calculate the eta based on the distance
+	// r := math.Abs(rand.NormFloat64()) 
+	eta := math.Abs(dropoffFloat - pickupFloat) + float64(rand.Intn(1000))
+
 	return &Route{
 		Pickup:  pickup,
 		Dropoff: dropoff,
-		ETA:     time.Duration(eta) * time.Minute,
+		ETA:     time.Duration(eta) ,
 	}
 }

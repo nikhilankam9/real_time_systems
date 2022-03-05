@@ -26,6 +26,7 @@ import (
 	"github.com/nikhilankam9/real_time_systems/hotrod/pkg/httperr"
 	"github.com/nikhilankam9/real_time_systems/hotrod/pkg/log"
 	"github.com/nikhilankam9/real_time_systems/hotrod/pkg/tracing"
+	"github.com/nikhilankam9/real_time_systems/hotrod/services/config"
 )
 
 // Server implements Customer service
@@ -38,7 +39,7 @@ type Server struct {
 
 // NewServer creates a new customer.Server
 func NewServer(hostPort string, tracer opentracing.Tracer, metricsFactory metrics.Factory, logger log.Factory) *Server {
-	return &Server{
+	s := &Server{
 		hostPort: hostPort,
 		tracer:   tracer,
 		logger:   logger,
@@ -47,6 +48,8 @@ func NewServer(hostPort string, tracer opentracing.Tracer, metricsFactory metric
 			logger.With(zap.String("component", "mysql")),
 		),
 	}
+	s.database.PopulateDB(config.MysqlCustomerPool)
+	return s
 }
 
 // Run starts the Customer server

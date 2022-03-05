@@ -13,11 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Modified by nikhilankam9 for educational purposes.
+
 package customer
 
 import (
 	"context"
 	"errors"
+	"fmt"
+	"math/rand"
 
 	"github.com/opentracing/opentracing-go"
 	tags "github.com/opentracing/opentracing-go/ext"
@@ -66,6 +70,18 @@ func newDatabase(tracer opentracing.Tracer, logger log.Factory) *database {
 				Location: "728,326",
 			},
 		},
+	}
+}
+
+func (d *database) PopulateDB(noCustomers int) {
+	for i := 1; i<= noCustomers; i++ {
+		if _, ok := d.customers[fmt.Sprint(i)]; !ok {
+			d.customers[fmt.Sprint(i)] = &Customer{
+				ID: fmt.Sprint(i),
+				Name: "Name" + fmt.Sprint(i),
+				Location: fmt.Sprintf("%d,%d", rand.Int()%1000, rand.Int()%1000),
+			}
+		}
 	}
 }
 

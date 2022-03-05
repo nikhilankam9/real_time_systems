@@ -120,43 +120,43 @@ func (eta *bestETA) getRoutes(ctx context.Context, customer *customer.Customer, 
 	results := make([]routeResult, 0, len(drivers))
 	wg := sync.WaitGroup{}
 
-	routeChannel := make(chan routeResult)
-	go func() {
-		for {
-			select {
-			case r := <-routeChannel:
-				results = append(results, r)
-			}
-		}
-	}()
+	// routeChannel := make(chan routeResult)
+	// go func() {
+	// 	for {
+	// 		select {
+	// 		case r := <-routeChannel:
+	// 			results = append(results, r)
+	// 		}
+	// 	}
+	// }()
 
-	for _, dd := range drivers {
-		wg.Add(1)
-		driver := dd 
-		eta.pool.Execute(func() {
-			route, err := eta.route.FindRoute(ctx, driver.Location, customer.Location)
-			routeChannel <- routeResult{driver: driver.DriverID, route: route, err: err}
-			wg.Done()
-		})
-	}
-
-
-	// routesLock := sync.Mutex{}
 	// for _, dd := range drivers {
 	// 	wg.Add(1)
 	// 	driver := dd 
 	// 	eta.pool.Execute(func() {
 	// 		route, err := eta.route.FindRoute(ctx, driver.Location, customer.Location)
-	// 		routesLock.Lock()
-	// 		results = append(results, routeResult{
-	// 			driver: driver.DriverID,
-	// 			route:  route,
-	// 			err:    err,
-	// 		})
-	// 		routesLock.Unlock()
+	// 		routeChannel <- routeResult{driver: driver.DriverID, route: route, err: err}
 	// 		wg.Done()
 	// 	})
 	// }
+
+
+	routesLock := sync.Mutex{}
+	for _, dd := range drivers {
+		wg.Add(1)
+		driver := dd 
+		eta.pool.Execute(func() {
+			route, err := eta.route.FindRoute(ctx, driver.Location, customer.Location)
+			routesLock.Lock()
+			results = append(results, routeResult{
+				driver: driver.DriverID,
+				route:  route,
+				err:    err,
+			})
+			routesLock.Unlock()
+			wg.Done()
+		})
+	}
 
 	wg.Wait()
 	return results
